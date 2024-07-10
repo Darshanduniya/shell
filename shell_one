@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Database connection details
+DB_USER="your_username"
+DB_PASSWORD="your_password"
+DB_HOST="your_host"
+DB_PORT="your_port"
+DB_NAME="your_database"
+
+# SQL query to fetch the count
+SQL_QUERY="SELECT COUNT(*) FROM your_table WHERE your_condition;"
+
+# Execute the SQL query and get the count
+count=$(echo "$SQL_QUERY" | mclient -u $DB_USER -d $DB_NAME -h $DB_HOST -p $DB_PORT -P $DB_PASSWORD -f csv | tail -n 1)
+
+# Check if the count is greater than 0
+if [ "$count" -gt 0 ]; then
+  # Execute test.sh if count is greater than 0
+  /data/duniya/test.sh
+else
+  # Execute dev.sh if count is 0 or less
+  /data/duniya/dev.sh
+fi
